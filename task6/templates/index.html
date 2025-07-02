@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block title %}All Posts{% endblock %}
+{% block content %}
+    <a href="/add" class="button">➕ Add New Post</a><br><br>
+    {% for post in posts %}
+        <div>
+            <h3><a href="/post/{{ post.id }}">{{ post.title }}</a></h3>
+            <p>{{ post.content[:100] }}...</p>
+            <hr>
+        </div>
+    {% endfor %}
+{% endblock %}

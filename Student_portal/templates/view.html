@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>View Students</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 30px;
+            background-color: #eef2f3;
+        }
+        table {
+            width: 90%;
+            margin: auto;
+            border-collapse: collapse;
+            background: white;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px 15px;
+            text-align: center;
+        }
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+        a {
+            padding: 5px 10px;
+            margin: 0 2px;
+            border-radius: 4px;
+            text-decoration: none;
+            color: white;
+        }
+        .edit {
+            background-color: #ffc107;
+        }
+        .delete {
+            background-color: #dc3545;
+        }
+        .back {
+            display: block;
+            width: 120px;
+            margin: 20px auto;
+            background: #17a2b8;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h2 style="text-align:center;">Student List</h2>
+    <table>
+        <tr>
+            <th>ID</th><th>Name</th><th>Age</th><th>Department</th><th>Actions</th>
+        </tr>
+        {% for student in students %}
+        <tr>
+            <td>{{ student.id }}</td>
+            <td>{{ student.name }}</td>
+            <td>{{ student.age }}</td>
+            <td>{{ student.department }}</td>
+            <td>
+                <a href="/edit/{{ student.id }}" class="edit">Edit</a>
+                <a href="/delete/{{ student.id }}" class="delete" onclick="return confirm('Delete this student?');">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    <a href="/" class="back">Back to Home</a>
+</body>
+</html>
