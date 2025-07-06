@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dynamic Form Generator</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <h2>Dynamic Form</h2>
+  <div id="form-container"></div>
+  <h3>Live Output:</h3>
+  <pre id="output">{}</pre>
+
+  <script>
+    async function generateForm() {
+      const response = await fetch('/form-schema');
+      const schema = await response.json();
+
+      const formContainer = document.getElementById('form-container');
+      const output = document.getElementById('output');
+      const form = document.createElement('form');
+      const formData = {};
+
+      schema.fields.forEach(field => {
+        const label = document.createElement('label');
+        label.innerText = field.label;
+
+        const input = document.createElement('input');
+        input.type = field.type;
+        input.name = field.name;
+
+        input.addEventListener('input', () => {
+          if (field.type === 'checkbox') {
+            formData[field.name] = input.checked;
+          } else {
+            formData[field.name] = input.value;
+          }
+          output.textContent = JSON.stringify(formData, null, 2);
+        });
+
+        form.appendChild(label);
+        form.appendChild(input);
+      });
+
+      formContainer.appendChild(form);
+    }
+
+    generateForm();
+  </script>
+</body>
+</html>
